@@ -24,7 +24,7 @@ class Individual:
     def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test ):
         
         ch = self.chromosome
-        
+     
         # We only fit selected features, i.e self.chromosome
         accuracies = [ model.fit( X_train[:,ch], y_train ).score( X_test[:,ch], y_test ) for model in models ]
             
@@ -38,7 +38,7 @@ class Population:
     
     # Initialyzse the population
     def __init__(self, n_components , X_train, X_test, y_train, y_test, pop_size=200, 
-                 models=[MultinomialNB(), SGDClassifier(max_iter=5, tol=-np.infty)], model_weigths=[0.7, 0.3]):
+                 models=[ MultinomialNB(), SGDClassifier(max_iter=5, tol=-np.infty) ], model_weigths=[0.7, 0.3]):
         
         self.X_train, self.X_test = X_train, X_test   
         self.y_train, self.y_test = y_train, y_test
@@ -50,7 +50,6 @@ class Population:
         # Generating the first generation 
         individuals = self._generate_firstgen(set(self.genes), pop_size, n_components)
                                              
-
         # Init individuals and their fitnesses  
         self.individuals, self.fitnesses,  = [], []
         self._update(individuals)
@@ -58,12 +57,11 @@ class Population:
 
     # Creating individuals with replacement of genes
     def _generate_firstgen(self,available_genes, pop_size, chr_size):
-       
-        individuals = []
         
+        individuals = [] 
         for i in range(pop_size):
-            chromosome = np.array( rd.sample( available_genes, chr_size ) )
-            individuals.append( Individual(chromosome) )
+            chromosome = np.array(rd.sample( available_genes, chr_size ))
+            individuals.append(Individual(chromosome))
         
         return individuals
     
@@ -83,7 +81,7 @@ class Population:
     #Take 2 individuals in iterable and return their two children.
     def _reproduce(self, parents_idx, pc = 0.9, pm = 0.05):
         
-        parents = [self.individuals[idx] for idx in parents_idx]
+        parents = [ self.individuals[idx] for idx in parents_idx ]
         
         # min_parent is parent who has lower chromosome size. At first, there's
         # only one individual that has lower chromosome size, which is due to 
@@ -122,7 +120,7 @@ class Population:
         for i in range(2):
             for j in range(min_chr_size): 
                 if rd.random() < pm:
-                    chromosomes[i][j] = rd.choice( self.genes )
+                    chromosomes[i][j] = rd.choice(self.genes)
                     
         return [ Individual(chromosomes[0]), Individual(chromosomes[1]) ] 
     
@@ -144,16 +142,13 @@ class Population:
     def make_next_gen(self):
         
         mating_pool = self._geta_mating_pool()
-        
-        #Acouplement of consecutive pairs in the mating_pool
-        new_individuals = []
-        
+        new_individuals = []     
         while mating_pool:  
             parents_idxs = [ mating_pool.pop() ,  mating_pool.pop() ]
             childrens = self._reproduce( parents_idxs ) 
             new_individuals =  new_individuals + [ childrens[0], childrens[1] ]
         
-        self._update( new_individuals )
+        self._update(new_individuals)
             
         #Delete n worst individuals by keeping the n bests
         w = self._get_ranks()
@@ -161,8 +156,8 @@ class Population:
         good_idxs = np.random.choice([ i for i in range(len(self)) ], len(self)//2, replace = False, p = normalized_w) 
         
         #Update the attributes
-        self.individuals = self.individuals[ good_idxs ]
-        self.fitnesses = self.fitnesses[ good_idxs ]
+        self.individuals = self.individuals[good_idxs]
+        self.fitnesses = self.fitnesses[good_idxs]
             
     
         
@@ -170,8 +165,8 @@ class Population:
     def _get_ranks(self):
         
         sorted_ind_idxs = np.argsort(self.fitnesses)
-        
         res = np.zeros(len(self))
+        
         for rank, ind_idx in enumerate(sorted_ind_idxs):
             res[ind_idx] = rank
             
