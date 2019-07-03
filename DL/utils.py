@@ -18,7 +18,6 @@ import torch
 from torch.utils.data import TensorDataset
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import matplotlib.pyplot as plt
-plt.style.use('ggplot')
 
 
 #Transform texts in arrays of the tokens' indexs in vocab
@@ -47,7 +46,7 @@ def raw_texts_to_sequences(texts, tokenizer, vocab):
 
 
 def narray_to_tensor_dataset(X_train, X_test, y_train, y_test):
-
+        
     inputs_train, targets_train = torch.tensor(X_train, dtype = torch.long), torch.tensor(np.array(y_train), dtype = torch.float32 ) 
     inputs_test, targets_test = torch.tensor(X_test, dtype = torch.long), torch.tensor(np.array(y_test), dtype = torch.float32 ) 
     
@@ -94,25 +93,3 @@ def train_model(net, trainloader, criterion, optimizer, metric_calculator, valid
     
     return epoch_loss, epoch_mt, epoch_loss_valid, epoch_mt_valid
 
-
-
-def plot_history(history):
-    
-    acc = history.history['acc']
-    val_acc = history.history['val_acc']
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
-    x = range(1, len(acc) + 1)
-
-    plt.figure(figsize=(12, 5))
-#    plt.subplot(1, 2, 1)
-#    plt.plot(x, acc, 'b', label='Training acc')
-#    plt.plot(x, val_acc, 'r', label='Validation acc')
-#    plt.title('Training and validation accuracy')
-#    plt.legend()
-    
-    plt.subplot(1, 2, 2)
-    plt.plot(x, loss, 'b', label='Training loss')
-    plt.plot(x, val_loss, 'r', label='Validation loss')
-    plt.title('Training and validation loss')
-    plt.legend()
