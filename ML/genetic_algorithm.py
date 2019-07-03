@@ -21,13 +21,10 @@ class Individual:
         
         
     # Return the fitness evaluation of current individual. Assumes dataset is balanced
-    def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test ):
-        
+    def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test ): 
         ch = self.chromosome
-     
-        # We only fit selected features, i.e self.chromosome
-        accuracies = [ model.fit( X_train[:,ch], y_train ).score( X_test[:,ch], y_test ) for model in models ]
-            
+        accuracies = [ model.fit( X_train[:,ch], y_train ).score( X_test[:,ch], y_test ) for model in models ]    
+        
         return np.dot(accuracies, model_weigths)
     
 
