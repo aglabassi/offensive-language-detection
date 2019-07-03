@@ -58,9 +58,4 @@ class CNN4old(nn.Module):
         return emb + "\n" + convs + "\n" + drop1 + "\nMaxPool \n" + drop2 + "\n" + lin + "\n"
         
         
-        
-
-#
-#
-#
-
+       
