@@ -12,14 +12,14 @@ def load_src(name, fpath):
 
 load_src("utils", "../data/utils.py" )
 
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import chi2
-from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import SGDClassifier
-from utils import get_twitter_dataset, TwitterPreprocessorTokenizer
+from utils import make_twitter_dataset, TwitterPreprocessorTokenizer
 import genetic_algorithm as ga
 
 SHUFFLE_DATASET=False
@@ -31,12 +31,12 @@ MODELS = [ MultinomialNB(alpha = 9.05), RandomForestClassifier(), SGDClassifier(
 if SHUFFLE_DATASET:
     make_twitter_dataset()  
 df = pd.read_csv( "../data/tweet_old.csv" )
-X_raw, y = df["input"], df["target"]
+Xraw, y = df["input"], df["target"]
 
 #Train/test split
-split_loc = int(TRAIN_SIZE * len(X))
-Xraw_train, X_test = X[:split_loc], X[split_loc:]
-yraw_train, y_test = y.iloc[:split_loc], y.iloc[split_loc:]
+split_loc = int(TRAIN_SIZE * len(Xraw))
+Xraw_train, Xraw_test = Xraw[:split_loc], Xraw[split_loc:]
+y_train, y_test = y.iloc[:split_loc], y.iloc[split_loc:]
 
 
 # Feature extraction
