@@ -60,7 +60,7 @@ pop = ga.Population(int(0.2*X_train.shape[1]), X_train, X_test, y_train, y_test,
 for i in range(5000):
     pop.make_next_gen()
     features = pop.get_best_chromosome()
-    #print(max(pop.fitnesses))
+    print(max(pop.fitnesses))
 features = pop.get_best_chromosome()
 X_train_r = X_train[:, features]
 X_test_r = X_test[:, features]
