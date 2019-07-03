@@ -25,6 +25,7 @@ class TwitterPreprocessorTokenizer():
         
     def __call__(self, text):  
         cleaned_text =  TwitterPreprocessorTokenizer._clean(str(text))
+        
         return [ self.stem(word) for word in word_tokenize(cleaned_text) if word not in self.stopwords ]
     
     
