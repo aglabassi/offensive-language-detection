@@ -13,10 +13,10 @@ import torch.nn.functional as F
 class CNN4old(nn.Module):
     
     def __init__(self, vocab_size, emb_weights=None, nb_krnl=32, window_sizes=[1,2,3] , drop1=0.3, drop2=0.3):
+        
         super(CNN4old, self).__init__()          
         
         embedding_dim = emb_weights.shape[1] if emb_weights is not None else 50
-        
         try:
             self.embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim)
             self.embedding.weight.data.copy_(emb_weights)
@@ -49,7 +49,6 @@ class CNN4old(nn.Module):
     
     
     def __str__(self):
-        
         emb = str(self.embedding)
         convs = str(self.convs)
         drop1 = str(self.drop1)
