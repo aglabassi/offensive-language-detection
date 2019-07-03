@@ -36,8 +36,7 @@ DROP2 = 0.3
 
 #Geting the dataset
 if SHUFFLE_DATASET:
-    make_twitter_dataset()
-    
+    make_twitter_dataset() 
 df = pd.read_csv( "../data/tweet_old.csv" )
 X_raw, y = df["input"], df["target"]
 
