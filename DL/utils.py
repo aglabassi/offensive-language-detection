@@ -17,7 +17,6 @@ import numpy as np
 import torch
 from torch.utils.data import TensorDataset
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import matplotlib.pyplot as plt
 
 
 #Transform texts in arrays of the tokens' indexs in vocab
