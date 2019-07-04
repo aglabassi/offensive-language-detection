@@ -22,7 +22,7 @@ from sklearn.linear_model import SGDClassifier
 from utils import make_twitter_dataset, TwitterPreprocessorTokenizer
 import genetic_algorithm as ga
 
-SHUFFLE_DATASET=False
+SHUFFLE_DATASET = False
 TRAIN_SIZE = 0.8
 MODELS = [ MultinomialNB(alpha = 9.05), RandomForestClassifier(), SGDClassifier() ]
 
