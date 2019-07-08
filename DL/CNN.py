@@ -49,6 +49,7 @@ class CNN4old(nn.Module):
     
     
     def __str__(self):
+        
         emb = str(self.embedding)
         convs = str(self.convs)
         drop1 = str(self.drop1)

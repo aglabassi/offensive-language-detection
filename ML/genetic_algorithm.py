@@ -16,12 +16,14 @@ import random as rd
 class Individual:
     
     def __init__( self, chromosome ):
+        
         self.chromosome = chromosome
         self.k = len(chromosome)
         
         
     # Return the fitness evaluation of current individual. Assumes dataset is balanced
-    def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test ): 
+    def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test ):
+        
         ch = self.chromosome
         accuracies = [ model.fit( X_train[:,ch], y_train ).score( X_test[:,ch], y_test ) for model in models ]    
         
@@ -172,14 +174,17 @@ class Population:
         
     
     def get_best_chromosome(self):
+        
         idx_max = np.where( self.fitnesses == max( self.fitnesses ))[0][0]     
         return self.individuals[idx_max].chromosome
     
     
     # Iterates in random order
     def __iter__(self):
+        
         for individual in self.individuals:
             yield individual
             
     def __len__(self):
+        
         return len(self.individuals)
