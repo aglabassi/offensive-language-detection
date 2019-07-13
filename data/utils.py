@@ -5,6 +5,10 @@
 Created on Mon May 20 14:04:34 2019
 
 @author: Abdel Ghani Labassi
+
+
+Utils for preprocessing raw data
+
 """
 
 from nltk.stem.snowball import SnowballStemmer

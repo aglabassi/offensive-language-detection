@@ -4,12 +4,15 @@
 Created on Mon Jun 24 14:56:33 2019
 
 @author: Abdel
+
 """
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
+#A convolutional neural network for text classification (offensive language detection)
 class CNN4old(nn.Module):
     
     def __init__(self, vocab_size, emb_weights=None, nb_krnl=32, window_sizes=[1,2,3] , drop1=0.3, drop2=0.3):

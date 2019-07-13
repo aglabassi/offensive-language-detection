@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jun 24 15:17:14 2019
-
-"""
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
 Created on Thu Jun 20 12:57:03 2019
 
 @author: Abdel
+
+Utils for training DL model (pytorch)
+ 
 """
 
 import numpy as np

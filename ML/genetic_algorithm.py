@@ -5,7 +5,12 @@
 Created on Mon May 21 12:49:02 2019
 
 @author: Abdel Ghani Labassi
+
+A genetic algorithm implementation for feature selection
+
 """
+
+
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import  SGDClassifier
 import numpy as np
