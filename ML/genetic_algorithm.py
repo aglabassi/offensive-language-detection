@@ -20,17 +20,17 @@ import random as rd
 # the complete vocabulary
 class Individual:
     
-    def __init__( self, chromosome ):
+    def __init__(self, chromosome):
         
         self.chromosome = chromosome
         self.k = len(chromosome)
         
         
     # Return the fitness evaluation of current individual. Assumes dataset is balanced
-    def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test ):
+    def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test):
         
         ch = self.chromosome
-        accuracies = [ model.fit( X_train[:,ch], y_train ).score( X_test[:,ch], y_test ) for model in models ]    
+        accuracies = [ model.fit(X_train[:,ch], y_train).score(X_test[:,ch], y_test) for model in models ]    
         
         return np.dot(accuracies, model_weigths)
     
@@ -41,7 +41,7 @@ class Individual:
 class Population:
     
     # Initialyzse the population
-    def __init__(self, n_components , X_train, X_test, y_train, y_test, pop_size=200, 
+    def __init__(self, chr_size , X_train, X_test, y_train, y_test, pop_size=200, 
                  models=[ MultinomialNB(), SGDClassifier(max_iter=5, tol=-np.infty) ], model_weigths=[0.7, 0.3]):
         
         self.X_train, self.X_test = X_train, X_test   
@@ -52,7 +52,7 @@ class Population:
         self.genes = [ i for i in range(X_test[0].shape[1])]
         
         # Generating the first generation 
-        individuals = self._generate_firstgen(set(self.genes), pop_size, n_components)
+        individuals = self._generate_firstgen(set(self.genes), pop_size, chr_size)
                                              
         # Init individuals and their fitnesses  
         self.individuals, self.fitnesses,  = [], []
@@ -60,11 +60,11 @@ class Population:
     
 
     # Creating individuals with replacement of genes
-    def _generate_firstgen(self,available_genes, pop_size, chr_size):
+    def _generate_firstgen(self, available_genes, pop_size, chr_size):
         
         individuals = [] 
         for i in range(pop_size):
-            chromosome = np.array(rd.sample( available_genes, chr_size ))
+            chromosome = np.array(rd.sample(available_genes, chr_size))
             individuals.append(Individual(chromosome))
         
         return individuals
@@ -87,9 +87,7 @@ class Population:
         
         parents = [ self.individuals[idx] for idx in parents_idx ]
         
-        # min_parent is parent who has lower chromosome size. At first, there's
-        # only one individual that has lower chromosome size, which is due to 
-        # genes attribution in first generation
+        # min_parent is parent who has lower chromosome size. 
         min_parent = 1 if parents[0].k > parents[1].k else 0   
         min_chr_size = parents[min_parent].k
         
@@ -148,8 +146,8 @@ class Population:
         mating_pool = self._geta_mating_pool()
         new_individuals = []     
         while mating_pool:  
-            parents_idxs = [ mating_pool.pop() ,  mating_pool.pop() ]
-            childrens = self._reproduce( parents_idxs ) 
+            parents_idxs = [ mating_pool.pop(), mating_pool.pop() ]
+            childrens = self._reproduce(parents_idxs) 
             new_individuals =  new_individuals + [ childrens[0], childrens[1] ]
         
         self._update(new_individuals)
