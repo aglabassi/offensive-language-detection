@@ -31,7 +31,7 @@ TRAIN_SIZE = 0.8
 BATCH_SIZE = 32
 NB_KRNL = 128
 KRNL_WINDOW_SIZES = [2,3]
-DROP1 = 0.3
+DROP1 = 0.3 
 DROP2 = 0.3
 
 #Geting the dataset
@@ -41,9 +41,9 @@ df = pd.read_csv( "../data/tweet_old.csv" )
 X_raw, y = df["input"], df["target"]
 
 #Getting pretrained embeddings and vocab
-model = gensim.models.KeyedVectors.load_word2vec_format('embeddings/glove.twitter.27B.100d.txt')
+model = gensim.models.KeyedVectors.load_word2vec_format('embeddings/w2v.twitter.27B.100d.txt')
 vocab = model.vocab
-
+print("dd")
 #Init tokenizer
 tokenizer = TwitterPreprocessorTokenizer(stopwords=False, stem=False)
 

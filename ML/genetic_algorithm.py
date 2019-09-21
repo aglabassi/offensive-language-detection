@@ -21,14 +21,13 @@ import random as rd
 class Individual:
     
     def __init__(self, chromosome):
-        
         self.chromosome = chromosome
         self.k = len(chromosome)
         
         
     # Return the fitness evaluation of current individual. Assumes dataset is balanced
     def fitness(self, models, model_weigths, X_train, X_test, y_train, y_test):
-        
+      
         ch = self.chromosome
         accuracies = [ model.fit(X_train[:,ch], y_train).score(X_test[:,ch], y_test) for model in models ]    
         
@@ -61,7 +60,7 @@ class Population:
 
     # Creating individuals with replacement of genes
     def _generate_firstgen(self, available_genes, pop_size, chr_size):
-        
+      
         individuals = [] 
         for i in range(pop_size):
             chromosome = np.array(rd.sample(available_genes, chr_size))
@@ -73,7 +72,7 @@ class Population:
     # Takes an iterable of individuals and adds it to population by updating
     # self.fitnesses and self.individuals
     def _update(self, new_individuals):
-        
+      
         new_fitnesses = [ individual.fitness(self.models, self.model_weigths, self.X_train, self.X_test,self.y_train, self.y_test) 
                                 for individual in new_individuals ]
         
@@ -130,7 +129,7 @@ class Population:
     # Outputs a mating pool of population size, using ranking selection, i.e weigths
     # are the ranks of the individuals.
     def _geta_mating_pool(self):
-        
+      
         mating_pool = rd.choices([ j for j in range(len(self)) ], self._get_ranks(), k=len(self))
         
         #Uniform shuffling is important for later-on uniform matching
@@ -142,8 +141,8 @@ class Population:
     
     # Produces next generation by replacing the current one
     def make_next_gen(self):
-        
         mating_pool = self._geta_mating_pool()
+        
         new_individuals = []     
         while mating_pool:  
             parents_idxs = [ mating_pool.pop(), mating_pool.pop() ]
@@ -165,10 +164,9 @@ class Population:
         
     # Returns an array giving the ranks of the individuals   
     def _get_ranks(self):
-        
+      
         sorted_ind_idxs = np.argsort(self.fitnesses)
         res = np.zeros(len(self))
-        
         for rank, ind_idx in enumerate(sorted_ind_idxs):
             res[ind_idx] = rank
             
@@ -177,17 +175,14 @@ class Population:
         
     
     def get_best_chromosome(self):
-        
         idx_max = np.where( self.fitnesses == max( self.fitnesses ))[0][0]     
         return self.individuals[idx_max].chromosome
     
     
     # Iterates in random order
-    def __iter__(self):
-        
+    def __iter__(self):        
         for individual in self.individuals:
             yield individual
             
     def __len__(self):
-        
         return len(self.individuals)
